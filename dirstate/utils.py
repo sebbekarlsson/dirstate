@@ -2,7 +2,6 @@ import tarfile
 import datetime
 import base64
 import os
-import ntpath
 from dirstate.constants import STATE_DELIMETER, DIRECTORY
 
 
@@ -44,5 +43,6 @@ def parse_state_id(state_id):
 
     return {
         'directory': parts[0],
-        'timestamp': parts[1]
+        'timestamp': parts[1],
+        'date': datetime.datetime.fromtimestamp(float(parts[1]))
     }

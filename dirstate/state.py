@@ -20,10 +20,14 @@ def get_states(directory):
 
 
 def save_state(directory):
+    state_id = new_state_id(directory)
+
     compress(
-        os.path.join(DIRECTORY, new_state_id(directory)),
+        os.path.join(DIRECTORY, state_id),
         directory
     )
+
+    return state_id
 
 
 def set_state(directory, timestamp):
