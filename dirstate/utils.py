@@ -46,3 +46,7 @@ def parse_state_id(state_id):
         'timestamp': parts[1],
         'date': datetime.datetime.fromtimestamp(float(parts[1]))
     }
+
+
+def to_mb(value):
+    return value / (1024*1024.0)

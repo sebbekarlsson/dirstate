@@ -2,7 +2,13 @@ import os
 import glob
 import ntpath
 import shutil
-from dirstate.utils import compress, new_state_id, parse_state_id, decompress
+from dirstate.utils import (
+    compress,
+    new_state_id,
+    parse_state_id,
+    decompress,
+    to_mb
+)
 from dirstate.constants import DIRECTORY
 
 
@@ -13,7 +19,7 @@ def get_states(directory):
             [
                 dict(
                     parse_state_id(ntpath.basename(fname.split('.tar.gz')[0])),
-                    **dict(file=fname)
+                    **dict(file=fname, mb=to_mb(os.path.getsize(fname)))
                 )
                 for fname in glob.glob(os.path.join(DIRECTORY, '*.tar.gz'))
             ]
