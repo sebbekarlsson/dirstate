@@ -43,3 +43,11 @@
 > To install `dirstate`; clone down the repository and run:
 
     $ python setup.py install
+
+## Where are the states stored?
+> The states are stored in  `$HOME/.dirstate` , every state is a compressed `.tar.gz` file.
+>
+> The filename of every state contains information about it; such as:
+>
+> * directory name
+> * timestamp
