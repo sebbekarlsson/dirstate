@@ -1,7 +1,8 @@
 import os
 import glob
 import ntpath
-from dirstate.utils import compress, new_state_id, parse_state_id
+import shutil
+from dirstate.utils import compress, new_state_id, parse_state_id, decompress
 from dirstate.constants import DIRECTORY
 
 
@@ -10,7 +11,8 @@ def get_states(directory):
         lambda x: x['directory'] == directory,
         [
             dict(
-                parse_state_id(ntpath.basename(fname)), **dict(file=fname)
+                parse_state_id(ntpath.basename(fname.split('.tar.gz')[0])),
+                **dict(file=fname)
             )
             for fname in glob.glob(os.path.join(DIRECTORY, '*.tar.gz'))
         ]
@@ -25,4 +27,19 @@ def save_state(directory):
 
 
 def set_state(directory, timestamp):
-    pass
+    state = None
+
+    states = filter(
+        lambda x: x['timestamp'] == timestamp,
+        get_states(directory)
+    )
+
+    if not states:
+        return False
+    else:
+        state = states[0]
+
+    shutil.rmtree(directory)
+    decompress(state['file'], directory)
+
+    return timestamp

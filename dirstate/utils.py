@@ -15,16 +15,18 @@ def compress(filename, directory):
     with tarfile.open(filename + '.tar.gz', mode='w:gz') as archive:
         archive.add(
             directory,
-            ntpath.basename(directory),
-            recursive=True
+            recursive=True,
+            arcname=''
         )
     archive.close()
 
     return archive
 
 
-def decompress(filename):
-    pass
+def decompress(filename, directory):
+    tar = tarfile.open(filename, 'r:gz')
+    tar.extractall(path=directory)
+    tar.close()
 
 
 def new_timestamp():

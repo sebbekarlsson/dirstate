@@ -1,18 +1,7 @@
 import os
 import sys
-import argparse
 from dirstate.utils import initialize
-from dirstate.state import save_state, get_states
-
-
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    'command',
-    type=str,
-    help='what to do'
-)
-
-args = parser.parse_args()
+from dirstate.state import save_state, get_states, set_state
 
 
 def run():
@@ -26,4 +15,4 @@ def run():
     elif sys.argv[1] == 'save':
         print(save_state(path))
     elif sys.argv[1] == 'set':
-        pass
+        print(set_state(path, sys.argv[2]))
