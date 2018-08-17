@@ -7,15 +7,18 @@ from dirstate.constants import DIRECTORY
 
 
 def get_states(directory):
-    return filter(
-        lambda x: x['directory'] == directory,
-        [
-            dict(
-                parse_state_id(ntpath.basename(fname.split('.tar.gz')[0])),
-                **dict(file=fname)
-            )
-            for fname in glob.glob(os.path.join(DIRECTORY, '*.tar.gz'))
-        ]
+    return sorted(
+        filter(
+            lambda x: x['directory'] == directory,
+            [
+                dict(
+                    parse_state_id(ntpath.basename(fname.split('.tar.gz')[0])),
+                    **dict(file=fname)
+                )
+                for fname in glob.glob(os.path.join(DIRECTORY, '*.tar.gz'))
+            ]
+        ),
+        key=lambda x: x['date']
     )
 
 
